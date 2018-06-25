@@ -1,0 +1,125 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Bootstrap
+@import '~jquery-confirm/dist/jquery-confirm.min.css';
+
+body {
+  margin-top: 80px;
+}
+
+body {
+  background-color: #e9ebee !important;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.bob {
+  padding-top: 45px;
+  background-color: #f8f7f9;
+}
+
+.footer {
+  height: 60px;
+  line-height: 60px;
+}
+
+.border-top {
+  border-top: 1px solid #dee2e6 !important;
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+img.svg {
+  fill: #b9c9d4 !important;
+}
+
+.navbar-laravel {
+  background-color: #fff;
+  -webkit-box-shadow: 0 0px 0px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid #dee2e6 !important;
+}
+
+.modal-backdrop {
+  background-color: #000 !important;
+}
+
+.modal-backdrop.show {
+  opacity: 0.6;
+}
+
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: 0rem !important;
+  border-top-right-radius: 0rem !important;
+}
+
+.custom-file-input:lang(en) ~ .custom-file-label::after {
+  content: "Procurar arquivo" !important;
+}
+
+.mb-6 {
+  margin-bottom: 3.5rem !important;
+}
+
+.mb-7 {
+  margin-bottom: 4rem !important;
+}
+
+.mb-8 {
+  margin-bottom: 4.5rem !important;
+}
+
+.mt-2-10 {
+  margin-top: 0.55rem !important;
+}
+
+.btn-xs, .btn-group-xs > .btn {
+  padding: 0.25rem 0.3rem;
+  font-size: 0.9rem;
+  line-height: 0.5;
+  border-radius: 0.2rem;
+}
+
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-hover:hover {
+  border: 1px solid;
+  border-color: transparent;
+  -webkit-box-shadow: 0px 1px 12px 0px rgba(133,133,133,1);
+  -moz-box-shadow: 0px 1px 12px 0px rgba(133,133,133,1);
+  box-shadow: 0px 1px 12px 0px rgba(133,133,133,1);
+  -webkit-transition: box-shadow 0.3s ease-in-out 0s;
+  -moz-transition: box-shadow 0.3s ease-in-out 0s;
+  -o-transition: box-shadow 0.3s ease-in-out 0s;
+  -ms-transition: box-shadow 0.3s ease-in-out 0s;
+  transition: box-shadow 0.3s ease-in-out 0s;
+}
