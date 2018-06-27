@@ -17,9 +17,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('papel-view')) {
             abort(403);
         }
+
         $roles = Role::all();
         return response()->json($roles);
     }
@@ -42,7 +43,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Gate::denies('papel-create')) {
+            abort(403);
+        }
+
+        $role = new Role;
+        $role->name = $request->name;
+        $role->description = $request->description;
+        $role->save();
+        $this->permissionStore($request, $role->id);
+        return response()->json(['data'=>'Cadastrado com sucesso!']);
     }
 
     /**
@@ -52,9 +62,10 @@ class RoleController extends Controller
      */
     public function show(Request $request,$id)
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('papel-view')) {
             abort(403);
         }
+
         $roles = new Role();
         $roles = $this->filtro($roles,$request)
             ->paginate(13);
@@ -76,6 +87,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('papel-edit')) {
+            abort(403);
+        }
+
         $rule = Role::with('permissions')->find($id);
         return response()->json($rule);
     }
@@ -89,9 +104,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('papel-edit')) {
             abort(403);
         }
+
         $role = Role::find($id);
         $role->name = $request->name;
         $role->description = $request->description;
@@ -108,14 +124,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+        if(Gate::denies('papel-delete')) {
+            abort(403);
+        }
     }
 
     public function permissionStore(Request $request, $id)
     {
-        if(Gate::denies('dashboard-view')) {
-            abort(403);
-        }
         $role = Role::find($id);
         $role->removePermissions('');
         foreach($request->permission as $key => $value) {

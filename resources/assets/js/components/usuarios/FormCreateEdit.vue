@@ -40,8 +40,8 @@
             </div>
             <hr class="mb-3">
             <div class="form-group text-right mb-0">
-                <router-link :to="{ name: 'painel.usuarios.index' }" class="btn btn-link rounded-0">Cancelar</router-link>
-                <button type="submit" class="btn btn-success rounded-0" @click.prevent="submitForm('1')"><i class="fas fa-save"></i> Salvar</button>
+                <router-link :to="{ name: 'painel.usuarios.index' }" class="btn btn-link">Cancelar</router-link>
+                <button type="submit" class="btn btn-success" @click.prevent="submitForm('1')"><i class="fas fa-save"></i> Salvar</button>
             </div>
         </formulario>
     </div>
@@ -97,6 +97,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
                         <p class="mb-0"><i class="fa fa-check" aria-hidden="true"></i> ' + response.data.data + '</p>\
                     </div>';
+                    self.$router.push('/painel/usuarios');
                     self.msgErrorSuccess(true, self.msgError);
                 })
                 .catch(function (error) {

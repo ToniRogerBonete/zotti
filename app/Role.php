@@ -11,6 +11,11 @@ class Role extends Model
         'description'
     ];
 
+    public function permissionsDefault()
+    {
+        return $this->belongsToMany(Permission::class)->select('name');
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class);

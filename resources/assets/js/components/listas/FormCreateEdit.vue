@@ -3,33 +3,30 @@
         <formulario id="formCurso" :action="action" :method="method" enctype="" :token="token" css="">
             <input v-model="form.id" type="hidden" name="id">
             <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label>Nome da permissão</label>
-                    <input v-model="form.name" ref="name" type="text" class="form-control" id="name" placeholder="digite um nome">
-                </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                     <label>Descrição</label>
-                    <input v-model="form.description" type="text" class="form-control" id="description" placeholder="digite uma descrição">
+                    <input v-model="form.descricao" ref="descricao" type="text" class="form-control" id="descricao" placeholder="digite uma descrição">
                 </div>
             </div>
-            <h5>Administração de permissões</h5>
+            <div class="form-row">
+                <div class="form-group col-md-9">
+                    <label>Contato</label>
+                    <input v-model="form.contato" type="text" class="form-control" id="contato" placeholder="digite um contato">
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Telefone</label>
+                    <input v-model="form.telefone" type="text" class="form-control" id="telefone" placeholder="digite um telefone" v-mask="'(##)#####-####'">
+                </div>
+            </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
-                    <div class="col-lg-12">
-                        <div class="row">
-                            <div v-for="(item,index) in permissions" class="col-3 mt-2 p-0">
-                                <div class="custom-control custom-checkbox custom-control-inline">
-                                    <input v-model="form.permission" type="checkbox" :id="'customCheck' + index" :value="item.id" class="custom-control-input">
-                                    <label class="custom-control-label" :for="'customCheck' + index">{{item.name}}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <label>Observações</label>
+                    <textarea v-model="form.observacao" rows="3" class="form-control" id="observacao" placeholder="digite uma observação"></textarea>
                 </div>
             </div>
             <hr class="mb-3">
             <div class="form-group text-right mb-0">
-                <router-link :to="{ name: 'painel.papeis.index' }" class="btn btn-link">Cancelar</router-link>
+                <router-link :to="{ name: 'painel.listas.index' }" class="btn btn-link rounded-0">Cancelar</router-link>
                 <button type="submit" class="btn btn-success" @click.prevent="submitForm('1')"><i class="fas fa-save"></i> Salvar</button>
             </div>
         </formulario>
@@ -51,24 +48,24 @@
             return {
                 form: {
                     id: '',
-                    name: '',
-                    description: '',
-                    permission: []
+                    descricao: '',
+                    contato: '',
+                    telefone: '',
+                    observacao: '',
                 },
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
                         href: '/dashboard'
                     }, {
-                        text: 'Lista papéis',
-                        href: '/papeis'
+                        text: 'Lista listas',
+                        href: '/listas'
                     }, {
-                        text: 'Novo papel',
+                        text: 'Novo lista',
                         active: true
                     }]
                 },
                 token: Laravel.token,
-                permissions: []
             }
         },
         methods: {
@@ -84,49 +81,35 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
                         <p class="mb-0"><i class="fa fa-check" aria-hidden="true"></i> ' + response.data + '</p>\
                     </div>';
-                    self.$router.push('/painel/papeis');
                     self.msgErrorSuccess(true, self.msgError);
+                    self.$router.push('/painel/listas');
                 })
                 .catch(function (error) {
                     self.classErrorSuccess(error);
                 });
             },
-            getPapel() {
+            getLista() {
                 var self = this;
                 axios({
                     method: 'get',
-                    url: '/api/role/' + this.id + '/edit',
+                    url: '/api/lista/' + this.id + '/edit',
                 })
                 .then(function (response) {
                     self.form.id = response.data.id;
-                    self.form.name = response.data.name;
-                    self.form.description = response.data.description;
-                    $.each(response.data.permissions, function (index, value) {
-                        self.form.permission[index] = value['id'];
-                    });
+                    self.form.descricao = response.data.descricao;
+                    self.form.contato = response.data.contato;
+                    self.form.telefone = response.data.telefone;
+                    self.form.observacao = response.data.observacao;
                 })
                 .catch(function (error) {
                 });
             },
-            getPermissoes() {
-                var self = this;
-                axios({
-                    method: 'get',
-                    url: '/api/permission',
-                })
-                .then(function (response) {
-                    self.permissions = response.data;
-                })
-                .catch(function (error) {
-                });
-            }
         },
         mounted() {
             if(this.id) {
-                this.getPapel();
+                this.getLista();
             }
-            this.getPermissoes();
-            Vue.nextTick(() => this.$refs.name.focus());
+            Vue.nextTick(() => this.$refs.descricao.focus());
         },
     }
 </script>

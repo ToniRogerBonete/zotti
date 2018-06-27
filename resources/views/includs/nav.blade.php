@@ -16,27 +16,32 @@
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             @guest
-                <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                {{--<li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>--}}
+                {{--<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>--}}
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fab fa-product-hunt"></i> Produtos <span class="caret"></span>
+                        <i class="fas fa-arrow-alt-circle-down"></i> Cadastros <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @can('curso-view')
+                        @can('produto-view')
                         <a href="/painel/produtos" class="dropdown-item">
                             Cadastrar produtos
                         </a>
                         @endcan
+                        @can('lista-view')
+                        <a href="/painel/listas" class="dropdown-item">
+                            Cadastrar lista
+                        </a>
+                        @endcan
                     </div>
                 </li>
+                @if(Gate::check('usuario-view') || Gate::check('papel-view'))
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <i class="fas fa-cog"></i> Configurações <span class="caret"></span>
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @can('usuario-view')
                         <a href="/painel/usuarios" class="dropdown-item">
@@ -50,6 +55,8 @@
                         @endcan
                     </div>
                 </li>
+                @endif
+
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         <i class="fas fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
@@ -59,9 +66,11 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
+                        @can('perfil-view')
                         <a class="dropdown-item" href="">
                             Perfil
                         </a>
+                        @endcan
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Sair
                         </a>

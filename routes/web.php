@@ -15,4 +15,8 @@ Route::group(['middleware' => 'auth','prefix' => 'api'], function () {
     Route::resource('usuario', 'UsuarioController');
     Route::resource('role', 'RoleController');
     Route::resource('permission', 'PermissionController');
+    Route::resource('produto', 'ProdutoController');
+    Route::resource('lista', 'ListaController');
+    Route::resource('listapreco', 'ListaPrecoController');
+    Route::POST('usuario/getpermission', 'UsuarioController@getPermission');
 });

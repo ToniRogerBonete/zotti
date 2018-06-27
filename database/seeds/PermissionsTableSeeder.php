@@ -54,5 +54,59 @@ class PermissionsTableSeeder extends Seeder
             'description' =>'Deletar Papel'
         ]);
 
+        //produtos
+        Permission::firstOrCreate([
+            'name' =>'produto-view',
+            'description' =>'Acesso a lista de produto'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'produto-create',
+            'description' =>'Adicionar produto'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'produto-edit',
+            'description' =>'Editar produto'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'produto-delete',
+            'description' =>'Deletar produto'
+        ]);
+
+        //listas
+        Permission::firstOrCreate([
+            'name' =>'lista-view',
+            'description' =>'Acesso a lista de lista'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-create',
+            'description' =>'Adicionar lista'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-edit',
+            'description' =>'Editar lista'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-delete',
+            'description' =>'Deletar lista'
+        ]);
+
+        //lista preços
+        Permission::firstOrCreate([
+            'name' =>'lista-preco-view',
+            'description' =>'Acesso a lista de lista de preço'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-preco-create',
+            'description' =>'Adicionar lista de preço'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-preco-edit',
+            'description' =>'Editar lista de preço'
+        ]);
+        Permission::firstOrCreate([
+            'name' =>'lista-preco-delete',
+            'description' =>'Deletar lista de preço'
+        ]);
+
     }
 }

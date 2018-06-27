@@ -6,7 +6,7 @@
                     <breadcrumb class="bg-transparent p-0" :items="breadcrumb.items"></breadcrumb>
                 </div>
             </div>
-            <form-create-edit ref="formularioContato" :action="'/api/produto/' + id" :id="id" method="PUT"></form-create-edit>
+            <form-create-edit ref="formularioContato" :action="'/api/lista/' + id" :id="id" method="PUT"></form-create-edit>
         </div>
     </div>
 </template>
@@ -32,10 +32,10 @@
                         text: 'Dashboard',
                         href: '/painel/dashboard'
                     }, {
-                        text: 'Lista produtos',
-                        href: '/painel/produtos'
+                        text: 'Lista listas',
+                        href: '/painel/listas'
                     }, {
-                        text: 'Edita produto',
+                        text: 'Edita lista',
                         active: true
                     }]
                 },

@@ -17,9 +17,15 @@ import Produto from '../components/produtos/Index.vue';
 import ProdutoEdit from '../components/produtos/Edit.vue';
 import ProdutoCreate from '../components/produtos/Create.vue';
 
+//LISTAS
+import Lista from '../components/listas/Index.vue';
+import ListaEdit from '../components/listas/Edit.vue';
+import ListaCreate from '../components/listas/Create.vue';
+
 Vue.use(Router);
 
 export default new Router({
+    stor: [],
    routes: [
 		{
 			path: '*',
@@ -61,13 +67,13 @@ export default new Router({
 		   props: true,
 		},
 		{
-		   path: '/painel/papeis/create',
-		   name: 'painel.papeis.create',
-		   component: PapelCreate,
-		   props: true,
+			path: '/painel/papeis/create',
+			name: 'painel.papeis.create',
+			component: PapelCreate,
+			props: true,
 		},
 
-       {//papéis
+       {//produtos
            path: '/painel/produtos',
            name: 'painel.produtos.index',
            component: Produto,
@@ -82,6 +88,24 @@ export default new Router({
            path: '/painel/produtos/create',
            name: 'painel.produtos.create',
            component: ProdutoCreate,
+           props: true,
+       },
+
+       {//listas
+           path: '/painel/listas',
+           name: 'painel.listas.index',
+           component: Lista,
+       },
+       {
+           path: '/painel/listas/edit/:id',
+           name: 'painel.listas.edit',
+           component: ListaEdit,
+           props: true,
+       },
+       {
+           path: '/painel/listas/create',
+           name: 'painel.listas.create',
+           component: ListaCreate,
            props: true,
        }
    ],

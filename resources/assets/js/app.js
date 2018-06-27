@@ -15,6 +15,10 @@ window.$ = $;
 
 global.jQuery = require('jquery-confirm');
 
+//V-mask
+import VueMask from 'v-mask';
+Vue.use(VueMask);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -30,7 +34,7 @@ import money from 'v-money';
 Vue.use(money, {
     decimal: ',',
     thousands: '.',
-    prefix: 'R$ ',
+    prefix: '',
     suffix: '',
     precision: 2,
     masked: false
@@ -53,6 +57,26 @@ const store = new Vuex.Store({
 
 Vue.mixin({
     methods: {
+        b64DecodeUnicode: function (str) {
+            return decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        },
+        verificaPermissao: function(permissao) {
+            var Permissions = JSON.parse(window.localStorage['permissions']);
+            var arr = [];
+            var i;
+            for (i = 0; i < Permissions.length; i++) {
+                if(Permissions[i].name != '') {
+                    arr[i] = Permissions[i].name;
+                }
+            }
+            if(arr.indexOf(permissao) > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        },
         goBack: function (val) {
             this.$router.go(val);
         },
@@ -105,7 +129,23 @@ Vue.mixin({
                 </div>';
                 this.msgErrorSuccess(true, msgErro);
             }
-        }
+        },
+        getUser: function() {
+            var self = this;
+            axios({
+                method: 'POST',
+                url: '/api/usuario/getpermission',
+            })
+            .then(function (response) {
+                var data = response.data;
+                window.localStorage['token'] = data.token;
+                window.localStorage['permissions'] = data.permissions;
+                window.localStorage['url'] = data.url;
+                window.localStorage['userName'] = data.userName;
+            })
+            .catch(function (error) {
+            });
+        },
     }
 });
 
@@ -144,5 +184,6 @@ new Vue({
             self.verificaStatusHttp(error.response);
             return Promise.reject(error);
         });
+        this.getUser();
     }
 });

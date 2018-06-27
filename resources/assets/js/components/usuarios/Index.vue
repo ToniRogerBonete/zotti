@@ -19,8 +19,8 @@
                         </div>
                     </div>
                     <div class="form-group col text-right">
-                        <a href="/painel/usuarios/create" class="btn btn-success rounded-0">
-                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">Novo usuário</span>
+                        <a v-if="this.verificaPermissao('usuario-create')" href="/painel/usuarios/create" class="btn btn-success">
+                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">NOVO USUÁRIO</span>
                         </a>
                     </div>
                 </div>
@@ -34,19 +34,19 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item,index) in courses" @click.prevent="redirectCurso('/painel/usuarios/edit/' + item.id);" style="cursor: pointer">
+                            <tr v-for="(item,index) in itens" @click.prevent="redirectItem('/painel/usuarios/edit/' + item.id)" style="cursor: pointer">
                                 <td>
                                     {{item.name}}
                                 </td>
                             </tr>
-                            <tr v-if="semCurso" style="cursor: pointer">
+                            <tr v-if="totalRows==0" style="cursor: pointer">
                                 <td class="text-center" colspan="2">
                                     <i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de usuários
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <b-pagination v-if="mostraOcultaPaginacao" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
+                    <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
                 </div>
             </div>
         </div>
@@ -65,10 +65,11 @@
         data: function() {
             return {
                 filtro: '',
-                courses: '',
+                itens: {},
                 currentPage: null,
                 totalRows: null,
                 perPage: null,
+                lastPage: null,
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
@@ -77,29 +78,23 @@
                         text: 'Lista usuário',
                         href: ''
                     }]
-                },
-                semCurso: false,
-                mostraOcultaPaginacao: false
+                }
             }
         },
         methods: {
-            getCursos() {
+            getItem() {
                 self = this;
                 axios({
                     method: 'get',
                     url: '/api/usuario?page=' + this.currentPage + '&filtro=' + this.filtro
                 })
                 .then(function (response) {
-                    var courses = response.data;
-                    self.courses = courses.data;
-                    self.currentPage = courses.current_page;
-                    self.totalRows = courses.total;
-                    self.perPage = courses.per_page;
-                    if(!courses.data.length) {
-                        self.semCurso = true;
-                    } else {
-                        self.mostraOcultaPaginacao = true;
-                    }
+                    var item = response.data;
+                    self.itens = item.data;
+                    self.currentPage = item.current_page;
+                    self.totalRows = item.total;
+                    self.perPage = item.per_page;
+                    self.lastPage = response.data.last_page;
                 })
                 .catch(function (error) {
                 });
@@ -107,17 +102,19 @@
                     $('[data-toggle="tooltip"]').tooltip()
                 );
             },
-            redirectCurso(url) {
-                this.$router.push({ path: url });
+            redirectItem(url) {
+                if(this.verificaPermissao('usuario-edit')) {
+                    this.$router.push({ path: url });
+                }
             }
         },
         watch: {
             currentPage() {
-                this.getCursos();
+                this.getItem();
             },
         },
         mounted() {
-            this.getCursos();
+            this.getItem();
         }
     }
 </script>

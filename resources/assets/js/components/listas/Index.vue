@@ -19,8 +19,8 @@
                         </div>
                     </div>
                     <div class="form-group col text-right">
-                        <router-link v-if="this.verificaPermissao('produto-create')" :to="{ name: 'painel.papeis.create' }" class="btn btn-success">
-                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">NOVO PRODUTO</span>
+                        <router-link v-if="this.verificaPermissao('lista-create')" :to="{ name: 'painel.listas.create' }" class="btn btn-success">
+                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">NOVA LISTA</span>
                         </router-link>
                     </div>
                 </div>
@@ -30,24 +30,24 @@
                     <table class="table table-hover table-light table-bordered small">
                         <thead>
                         <tr>
-                            <th scope="col">Nome</th>
                             <th scope="col">Descrição</th>
+                            <th scope="col">Contato</th>
+                            <th scope="col">Telefone</th>
+                            <th scope="col">Observação</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(item,index) in papeis" @click.prevent="redirectItem('/painel/papeis/edit/' + item.id);" style="cursor: pointer">
-                                <td>
-                                    {{item.name}}
-                                </td>
-                                <td>
-                                    {{item.description}}
-                                </td>
-                            </tr>
-                            <tr v-if="totalRows==0" style="cursor: pointer">
-                                <td class="text-center" colspan="2">
-                                    <i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de papéis
-                                </td>
-                            </tr>
+                        <tr v-for="(item,index) in listas" @click.prevent="redirectItem('/painel/listas/edit/' + item.id);" style="cursor: pointer">
+                            <td>{{item.descricao}}</td>
+                            <td>{{item.contato}}</td>
+                            <td>{{item.telefone}}</td>
+                            <td>{{item.observacao}}</td>
+                        </tr>
+                        <tr v-if="totalRows==0" style="cursor: pointer">
+                            <td class="text-center" colspan="4">
+                                <i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de listas
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
@@ -78,12 +78,12 @@
                         text: 'Dashboard',
                         href: '/painel/dashboard'
                     }, {
-                        text: 'Lista papéis',
+                        text: 'Lista listas',
                         href: ''
                     }]
                 },
                 mostraOcultaPaginacao: false,
-                papeis: {}
+                listas: {}
             }
         },
         methods: {
@@ -91,10 +91,10 @@
                 self = this;
                 axios({
                     method: 'get',
-                    url: '/api/role/filtro?page=' + this.currentPage + '&filtro=' + this.filtro
+                    url: '/api/lista/filtro?page=' + this.currentPage + '&filtro=' + this.filtro
                 })
                 .then(function (response) {
-                    self.papeis = response.data.data;
+                    self.listas = response.data.data;
                     self.currentPage = response.data.current_page;
                     self.totalRows = response.data.total;
                     self.perPage = response.data.per_page;
@@ -107,7 +107,7 @@
                 );
             },
             redirectItem(url) {
-                if(this.verificaPermissao('papel-edit')) {
+                if(this.verificaPermissao('lista-edit')) {
                     this.$router.push({path: url});
                 }
             }
@@ -119,6 +119,6 @@
         },
         mounted() {
             this.getItens();
-        },
+        }
     }
 </script>

@@ -19,7 +19,7 @@ class UsuarioController extends Controller
      */
     public function index(Request $request)
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('usuario-view')) {
             abort(403);
         }
 
@@ -43,7 +43,9 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        if(Gate::denies('usuario-edit')) {
+            abort(403);
+        }
     }
 
     /**
@@ -54,7 +56,7 @@ class UsuarioController extends Controller
      */
     public function store(UsuarioRequest $request)
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('usuario-create')) {
             abort(403);
         }
 
@@ -64,7 +66,7 @@ class UsuarioController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
-        //$this->papelStore($request, $usuario->id);
+        $this->roleStore($request, $user->id);
         return response()->json(['data'=>'Usuário cadastrado com sucesso!']);
     }
 
@@ -76,7 +78,9 @@ class UsuarioController extends Controller
      */
     public function show(Usuario $usuario)
     {
-        //
+        if(Gate::denies('usuario-view')) {
+            abort(403);
+        }
     }
 
     /**
@@ -87,8 +91,24 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
+        if(Gate::denies('usuario-edit')) {
+            abort(403);
+        }
+
         $user = User::with('roles')->find($id);
         return response()->json($user);
+    }
+
+    /**
+     * @return array
+     */
+    public function getPermission()
+    {
+        $token = csrf_token();
+        $permissions = json_encode(Role::find(User::find(Auth::user()->id)->roles[0]['id'])->permissionsDefault);
+        $nomeUsuario = Auth::user()->name;
+        $url = url('/');
+        return ['token' => $token, 'permissions' => $permissions, 'userName' => $nomeUsuario, 'url' => $url];
     }
 
     /**
@@ -100,9 +120,10 @@ class UsuarioController extends Controller
      */
     public function update(UsuarioRequest $request, $id)
     {
-        if(Gate::denies('dashboard-view')) {
+        if(Gate::denies('usuario-edit')) {
             abort(403);
         }
+
         $user = User::find($id);
         $user->name = $request->name;
         if($request->password) {
@@ -121,15 +142,14 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        if(Gate::denies('usuario-delete')) {
+            abort(403);
+        }
     }
 
     //Papel store
     public function roleStore(Request $request, $id)
     {
-        if(Gate::denies('dashboard-view')) {
-            abort(403);
-        }
         $user = User::find($id);
         $role = Role::find($request->role);
         $user->removeRole();

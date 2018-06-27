@@ -6,12 +6,13 @@
                     <breadcrumb class="bg-transparent p-0" :items="breadcrumb.items"></breadcrumb>
                 </div>
             </div>
-            <form-create-edit ref="formularioContato" :action="'/api/produto/' + id" :id="id" method="PUT"></form-create-edit>
+            <form-create-edit ref="formularioContato" action="/api/lista" :id="id" method="POST"></form-create-edit>
         </div>
     </div>
 </template>
 
 <script>
+
     import Breadcrumb from "bootstrap-vue/src/components/breadcrumb/breadcrumb";
     import FormCreateEdit from "./FormCreateEdit";
 
@@ -27,15 +28,16 @@
         },
         data: function() {
             return {
+                token: Laravel.token,
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
                         href: '/painel/dashboard'
                     }, {
-                        text: 'Lista produtos',
-                        href: '/painel/produtos'
+                        text: 'Lista listas',
+                        href: '/painel/listas'
                     }, {
-                        text: 'Edita produto',
+                        text: 'Nova lista',
                         active: true
                     }]
                 },

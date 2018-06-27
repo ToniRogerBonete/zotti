@@ -18,7 +18,7 @@
 
         <script>
         window.Laravel = {!! json_encode([
-            'token' => csrf_token(),
+            'token' => csrf_token()
         ]) !!};
         </script>
 
@@ -35,7 +35,7 @@
 
         <footer class="footer border-top fixed-bottom d-print-none bg-white">
             <div class="container text-center">
-                <span class="text-secondary"> © {{ config('app.name', 'Cursos') }} - gerenciador de serviços</span>
+                <span class="text-secondary"> © {{ config('app.name') }} - gerenciador de serviços</span>
             </div>
         </footer>
 
