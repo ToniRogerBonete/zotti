@@ -1,7 +1,7 @@
 <?php
 Auth::routes();
 
-Route::get('/','HomeController@index');
+Route::get('/','Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['middleware' => 'auth','prefix' => 'painel'], function () {

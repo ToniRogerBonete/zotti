@@ -12,22 +12,22 @@
                         <div class="input-group">
                             <input v-model="filtro" type="text" class="form-control" placeholder="procure por...">
                             <div class="input-group-append">
-                                <button type="submit" @click.prevent="getCursos" class="btn btn-default">
+                                <button type="submit" @click.prevent="getItem" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Digiite algo que deseja encontrar">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col text-right">
-                        <a v-if="this.verificaPermissao('usuario-create')" href="/painel/usuarios/create" class="btn btn-success">
-                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">NOVO USUÁRIO</span>
+                        <a v-if="this.verificaPermissao('usuario-create')" href="/painel/usuarios/create" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Adicionar novo usuário">
+                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">Novo usuário</span>
                         </a>
                     </div>
                 </div>
             </form>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-hover table-light table-bordered small">
+                    <table v-if="itens.length>0" class="table table-hover table-light table-bordered small">
                         <thead>
                         <tr>
                             <th scope="col">Nome</th>
@@ -39,13 +39,12 @@
                                     {{item.name}}
                                 </td>
                             </tr>
-                            <tr v-if="totalRows==0" style="cursor: pointer">
-                                <td class="text-center" colspan="2">
-                                    <i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de usuários
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
+                    <div v-if="itens.length<1" class="alert alert-warning mt-3">
+                        <span v-if="filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Não foram encontrado produtos com <strong>{{filtro}}</strong></span>
+                        <span v-if="!filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de produtos</span>
+                    </div>
                     <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
                 </div>
             </div>
@@ -95,6 +94,9 @@
                     self.totalRows = item.total;
                     self.perPage = item.per_page;
                     self.lastPage = response.data.last_page;
+                    $(function () {
+                        $('[data-toggle="tooltip"]').tooltip()
+                    });
                 })
                 .catch(function (error) {
                 });

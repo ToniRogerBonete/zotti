@@ -89,7 +89,7 @@
                                         <td class="p-0"><money v-model="item.indice_compra" class="form-control rounded-0 border-0 text-center"></money></td>
                                         <td class="p-0"><input v-model="item.codigo_material" type="text" maxlength="20" class="form-control rounded-0 border-0 text-center"></td>
                                         <td class="p-0 text-center position-relative">
-                                            <button @click.prevent="removeListaPreco(item.id)" type="button" class="btn bg-transparent btn-sm" style="margin-top: 7px;">
+                                            <button @click.prevent="removeListaPreco(item.id,index)" type="button" class="btn bg-transparent btn-sm" style="margin-top: 7px;">
                                                 <i class="fas fa-times-circle fa-lg text-danger"></i>
                                             </button>
                                         </td>
@@ -232,7 +232,7 @@
                };
                this.form.precos.push(preco);
             },
-            removeListaPreco(id) {
+            removeListaPreco(id,index) {
                 var self = this;
                 $.confirm({
                     title: 'Confirme!',
@@ -241,6 +241,7 @@
                         confirmar: {
                             btnClass: 'btn-blue',
                             action: function () {
+                                self.form.precos.splice(index,1);
                                 axios({
                                     method: 'DELETE',
                                     url: '/api/listapreco/' + id
@@ -251,7 +252,6 @@
                                     <p><i class="fa fa-check" aria-hidden="true"></i> ' + response.data + '</p>\
                                     </div>';
                                     self.msgErrorSuccess(true, self.msgError);
-                                    self.getProduto();
                                 })
                                 .catch(function (error) {
                                 });

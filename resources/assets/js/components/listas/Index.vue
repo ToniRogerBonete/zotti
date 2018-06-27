@@ -12,22 +12,22 @@
                         <div class="input-group">
                             <input v-model="filtro" type="text" class="form-control" placeholder="procure por...">
                             <div class="input-group-append">
-                                <button type="submit" @click.prevent="getItens" class="btn btn-default">
+                                <button type="submit" @click.prevent="getItens" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Digiite algo que deseja encontrar">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="form-group col text-right">
-                        <router-link v-if="this.verificaPermissao('lista-create')" :to="{ name: 'painel.listas.create' }" class="btn btn-success">
-                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">NOVA LISTA</span>
+                        <router-link v-if="this.verificaPermissao('lista-create')" :to="{ name: 'painel.listas.create' }" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Adicionar nova lista">
+                            <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">Nova lista</span>
                         </router-link>
                     </div>
                 </div>
             </form>
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-hover table-light table-bordered small">
+                    <table v-if="itens.length>0" class="table table-hover table-light table-bordered small">
                         <thead>
                         <tr>
                             <th scope="col">Descrição</th>
@@ -37,19 +37,18 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr v-for="(item,index) in listas" @click.prevent="redirectItem('/painel/listas/edit/' + item.id);" style="cursor: pointer">
+                        <tr v-for="(item,index) in itens" @click.prevent="redirectItem('/painel/listas/edit/' + item.id);" style="cursor: pointer">
                             <td>{{item.descricao}}</td>
                             <td>{{item.contato}}</td>
                             <td>{{item.telefone}}</td>
                             <td>{{item.observacao}}</td>
                         </tr>
-                        <tr v-if="totalRows==0" style="cursor: pointer">
-                            <td class="text-center" colspan="4">
-                                <i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de listas
-                            </td>
-                        </tr>
                         </tbody>
                     </table>
+                    <div v-if="itens.length<1" class="alert alert-warning mt-3">
+                        <span v-if="filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Não foram encontrado listas com <strong>{{filtro}}</strong></span>
+                        <span v-if="!filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de listas</span>
+                    </div>
                     <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
                 </div>
             </div>
@@ -83,7 +82,7 @@
                     }]
                 },
                 mostraOcultaPaginacao: false,
-                listas: {}
+                itens: {}
             }
         },
         methods: {
@@ -94,11 +93,14 @@
                     url: '/api/lista/filtro?page=' + this.currentPage + '&filtro=' + this.filtro
                 })
                 .then(function (response) {
-                    self.listas = response.data.data;
+                    self.itens = response.data.data;
                     self.currentPage = response.data.current_page;
                     self.totalRows = response.data.total;
                     self.perPage = response.data.per_page;
                     self.lastPage = response.data.last_page;
+                    $(function () {
+                        $('[data-toggle="tooltip"]').tooltip()
+                    });
                 })
                 .catch(function (error) {
                 });

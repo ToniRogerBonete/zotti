@@ -135,22 +135,25 @@ class ProdutoController extends Controller
     }
 
     public function listas($request, $produto) {
-        foreach($request->precos as $key => $value) {
-            ListaPreco::updateOrCreate(
-                [
-                    'id' => $value['id']
-                ],
-                [
-                    'account_id' => Auth::user()->account_id,
-                    'produto_id' => $produto->id,
-                    'lista_id' =>  $value['lista_id'],
-                    'indice_venda' =>  $value['indice_venda'],
-                    'preco' =>  $value['preco'],
-                    'tipo' =>  $value['tipo'],
-                    'indice_compra' =>  $value['indice_compra'],
-                    'codigo_material' =>  $value['codigo_material']
-                ]
-            )->save();
+
+        if($request->precos[0]['lista_id']) {
+            foreach ($request->precos as $key => $value) {
+                ListaPreco::updateOrCreate(
+                    [
+                        'id' => $value['id']
+                    ],
+                    [
+                        'account_id' => Auth::user()->account_id,
+                        'produto_id' => $produto->id,
+                        'lista_id' => $value['lista_id'],
+                        'indice_venda' => $value['indice_venda'],
+                        'preco' => $value['preco'],
+                        'tipo' => $value['tipo'],
+                        'indice_compra' => $value['indice_compra'],
+                        'codigo_material' => $value['codigo_material']
+                    ]
+                )->save();
+            }
         }
     }
 
@@ -166,7 +169,7 @@ class ProdutoController extends Controller
             abort(403);
         }
 
-        $produto = Produto::find($this)
+        $produto = Produto::find($id)
             ->delete();
         return response()->json('Produto excluído com sucesso!');
     }

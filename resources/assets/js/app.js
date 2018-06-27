@@ -43,7 +43,7 @@ Vue.use(money, {
 const store = new Vuex.Store({
     state:{
         progressBar: {},
-        msgErrorSuccess: {}
+        msgErrorSuccess: {},
     },
     mutations:{
         setProgressBar(state,obj){

@@ -1,7 +1,13 @@
-<div class="container-fluid pr-0 pl-0">
+<div class="container-fluid">
+    @guest
     <a class="navbar-brand" href="{{ url('/') }}">
         <img src="{{ asset('brand/logo.jpg') }}" width="50" alt="">
     </a>
+    @else
+    <a class="navbar-brand" href="{{ url('/painel/dashboard') }}">
+        <img src="{{ asset('brand/logo.jpg') }}" width="50" alt="">
+    </a>
+    @endguest
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,7 +27,7 @@
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fas fa-arrow-alt-circle-down"></i> Cadastros <span class="caret"></span>
+                        <i class="fas fa-box-open fa-lg"></i> Cadastros <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -40,7 +46,7 @@
                 @if(Gate::check('usuario-view') || Gate::check('papel-view'))
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fas fa-cog"></i> Configurações <span class="caret"></span>
+                        <i class="fas fa-cog fa-lg"></i> Configurações <span class="caret"></span>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @can('usuario-view')
@@ -59,7 +65,7 @@
 
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fas fa-user"></i> {{ Auth::user()->name }} <span class="caret"></span>
+                        <i class="fas fa-user fa-lg"></i> {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -18,9 +18,9 @@ class CreateListaPrecosTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->integer('produto_id')->unsigned();
-            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
             $table->integer('lista_id')->unsigned();
-            $table->foreign('lista_id')->references('id')->on('listas');
+            $table->foreign('lista_id')->references('id')->on('listas')->onDelete('cascade');;
             $table->decimal('indice_venda','6','2');
             $table->char('tipo',3);
             $table->decimal('indice_compra','6','2');
