@@ -75,10 +75,10 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
                         text: 'Lista listas',
-                        href: ''
+                        active: true
                     }]
                 },
                 mostraOcultaPaginacao: false,

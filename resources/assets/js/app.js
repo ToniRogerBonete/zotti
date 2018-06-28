@@ -14,6 +14,7 @@ var $ = global.jQuery;
 window.$ = $;
 
 global.jQuery = require('jquery-confirm');
+global.jQuery = require('bootstrap-select');
 
 //V-mask
 import VueMask from 'v-mask';
@@ -28,6 +29,11 @@ Vue.use(VueMask);
 //Vuex
 import Vuex from 'Vuex';
 Vue.use(Vuex);
+
+
+import Autocomplete from 'v-autocomplete';
+import 'v-autocomplete/dist/v-autocomplete.css';
+Vue.use(Autocomplete);
 
 //Vue money
 import money from 'v-money';

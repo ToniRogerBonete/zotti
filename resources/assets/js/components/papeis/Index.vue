@@ -75,10 +75,10 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
                         text: 'Lista papéis',
-                        href: ''
+                        active: true
                     }]
                 },
                 mostraOcultaPaginacao: false,

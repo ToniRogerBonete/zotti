@@ -8,8 +8,11 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-// Bootstrap
+// Jquery confirm
 @import '~jquery-confirm/dist/jquery-confirm.min.css';
+
+// Bootstrap datapicker
+@import '~bootstrap-select/dist/css/bootstrap-select.css';
 
 body {
   margin-top: 80px;
@@ -122,4 +125,9 @@ img.svg {
   -o-transition: box-shadow 0.3s ease-in-out 0s;
   -ms-transition: box-shadow 0.3s ease-in-out 0s;
   transition: box-shadow 0.3s ease-in-out 0s;
+}
+.btn-select {
+  font-weight: 400;
+  color: #777 !important;
+  background-color: transparent;
 }

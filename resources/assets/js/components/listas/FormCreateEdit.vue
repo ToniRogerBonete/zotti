@@ -53,18 +53,6 @@
                     telefone: '',
                     observacao: '',
                 },
-                breadcrumb: {
-                    items: [{
-                        text: 'Dashboard',
-                        href: '/dashboard'
-                    }, {
-                        text: 'Lista listas',
-                        href: '/listas'
-                    }, {
-                        text: 'Novo lista',
-                        active: true
-                    }]
-                },
                 token: Laravel.token,
             }
         },

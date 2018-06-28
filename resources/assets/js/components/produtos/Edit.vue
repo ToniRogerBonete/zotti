@@ -30,12 +30,12 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
                         text: 'Lista produtos',
-                        href: '/painel/produtos'
+                        to: { name: 'painel.produtos.index' },
                     }, {
-                        text: 'Edita produto',
+                        text: 'Editar produto',
                         active: true
                     }]
                 },

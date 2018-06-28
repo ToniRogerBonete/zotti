@@ -55,18 +55,6 @@
                     description: '',
                     permission: []
                 },
-                breadcrumb: {
-                    items: [{
-                        text: 'Dashboard',
-                        href: '/dashboard'
-                    }, {
-                        text: 'Lista papéis',
-                        href: '/papeis'
-                    }, {
-                        text: 'Novo papel',
-                        active: true
-                    }]
-                },
                 token: Laravel.token,
                 permissions: []
             }

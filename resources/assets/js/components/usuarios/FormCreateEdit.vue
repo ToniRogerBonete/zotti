@@ -68,18 +68,6 @@
                     password_confirmation: '',
                     role: ''
                 },
-                breadcrumb: {
-                    items: [{
-                        text: 'Dashboard',
-                        href: '/dashboard'
-                    }, {
-                        text: 'Lista usuário',
-                        href: '/usuarios'
-                    }, {
-                        text: 'Novo usuário',
-                        active: true
-                    }]
-                },
                 token: Laravel.token,
                 roles: {}
             }

@@ -30,12 +30,12 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
                         text: 'Lista papéis',
-                        href: '/painel/papeis'
+                        to: { name: 'painel.papeis.index' },
                     }, {
-                        text: 'Edita papéis',
+                        text: 'Editar papel',
                         active: true
                     }]
                 },

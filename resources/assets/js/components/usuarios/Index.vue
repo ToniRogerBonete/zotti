@@ -19,9 +19,9 @@
                         </div>
                     </div>
                     <div class="form-group col text-right">
-                        <a v-if="this.verificaPermissao('usuario-create')" href="/painel/usuarios/create" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Adicionar novo usuário">
+                        <router-link v-if="this.verificaPermissao('usuario-create')" :to="{ name: 'painel.usuarios.create' }" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Adicionar novo usuário">
                             <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">Novo usuário</span>
-                        </a>
+                        </router-link>
                     </div>
                 </div>
             </form>
@@ -72,10 +72,10 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
-                        text: 'Lista usuário',
-                        href: ''
+                        text: 'Lista usuários',
+                        active: true
                     }]
                 }
             }

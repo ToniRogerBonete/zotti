@@ -5,55 +5,65 @@
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label>Código Zotti</label>
-                    <input v-model="form.codigo" ref="codigo" type="text" maxlength="5" pattern="[0-9]{10}" class="form-control" id="codigo" placeholder="código">
+                    <input v-model="form.codigo" ref="codigo" type="text" maxlength="5" pattern="[0-9]{10}" class="form-control" id="codigo">
                 </div>
                 <div class="form-group col-md-4">
                     <label>Código original</label>
-                    <input v-model="form.codigo_original" type="text" maxlength="30" pattern="[0-9]{10}" class="form-control" id="codigo_original" placeholder="código original">
+                    <input v-model="form.codigo_original" type="text" maxlength="30" pattern="[0-9]{10}" class="form-control" id="codigo_original" >
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-10">
                     <label>Descrição</label>
-                    <input v-model="form.nome" type="text" maxlength="255" class="form-control" id="nome" placeholder="digite uma descrição">
+                    <input v-model="form.nome" type="text" maxlength="255" class="form-control" id="nome">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2">
                     <label>Unidade de estoque</label>
-                    <input v-model="form.unidade_estoque" type="text" maxlength="3" class="form-control" id="unidade_estoque" placeholder="unid. estoque">
+                    <input v-model="form.unidade_estoque" type="text" maxlength="3" class="form-control" id="unidade_estoque">
                 </div>
                 <div class="form-group col-md-2">
                     <label>Prateleira</label>
-                    <input v-model="form.prateleira" type="text" maxlength="15" class="form-control" id="prateleira" placeholder="qual prateleira?">
+                    <input v-model="form.prateleira" type="text" maxlength="15" class="form-control" id="prateleira">
                 </div>
                 <div class="form-group col-md-2">
                     <label>Gaveta</label>
-                    <input v-model="form.gaveta" type="text" maxlength="15" class="form-control" id="gaveta" placeholder="qual gaveta?">
+                    <input v-model="form.gaveta" type="text" maxlength="15" class="form-control" id="gaveta">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label>Grupo Natureza de operação</label>
-                    <input v-model="form.natureza_operacao" type="text" maxlength="20" class="form-control" id="natureza_operacao" placeholder="natureza de operação">
+                    <label>Grupo natureza de operação</label>
+                    <input v-model="form.natureza_operacao" type="text" maxlength="20" class="form-control" id="natureza_operacao">
                 </div>
                 <div class="form-group col-md-3">
                     <label>Classificação fiscal(NCM)</label>
-                    <input v-model="form.ncm" type="text" maxlength="8" class="form-control" id="ncm" placeholder="classificação fiscal">
+                    <input v-model="form.ncm" type="text" maxlength="8" class="form-control" id="ncm">
                 </div>
-                <div class="form-group col-md-1">
+                <div class="form-group col-md-4">
                     <label>Origem</label>
-                    <input v-model="form.origem" type="text" maxlength="1" class="form-control" id="origem" placeholder="origem">
+                    <select v-model="form.origem" class="form-control" id="origem">
+                        <option value="0">0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8</option>
+                        <option value="1">1 - Estrangeira - Importação direta, exceto a indicada no código 6</option>
+                        <option value="2">2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7</option>
+                        <option value="3">3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% e inferior ou igual a 70%</option>
+                        <option value="4">4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes</option>
+                        <option value="5">5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%</option>
+                        <option value="6">6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX</option>
+                        <option value="7">7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista da CAMEX</option>
+                        <option value="8">8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-2">
                     <label>Cest</label>
-                    <input v-model="form.cest" type="text" maxlength="7" class="form-control" id="cest" placeholder="cest">
+                    <input v-model="form.cest" type="text" maxlength="7" class="form-control" id="cest">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
                     <label>Observações</label>
-                    <textarea v-model="form.observacao" row="4" class="form-control" placeholder="digite a observação do produto"></textarea>
+                    <textarea v-model="form.observacao" row="4" class="form-control"></textarea>
                 </div>
             </div>
             <div class="form-row mt-3">
@@ -78,8 +88,8 @@
                                 <tbody>
                                     <tr v-for="(item,index) in form.precos">
                                         <td class="p-0">
-                                            <select v-model="item.lista_id" class="form-control rounded-0 border-0">
-                                                <option>selecione uma lista</option>
+                                            <select v-model="item.lista_id" lista-description class="form-control rounded-0 border-0" data-live-search="true">
+                                                <option value="">selecione uma lista</option>
                                                 <option v-for="(itenl,index) in listas" :selected="item.lista_id == itenl.id ? true : false" :value="itenl.id">{{itenl.descricao}}</option>
                                             </select>
                                         </td>
@@ -143,18 +153,6 @@
                         'tipo': '',
                         'indice_compra': '',
                         'codigo_material': ''
-                    }]
-                },
-                breadcrumb: {
-                    items: [{
-                        text: 'Dashboard',
-                        href: '/dashboard'
-                    }, {
-                        text: 'Lista produtos',
-                        href: '/produtos'
-                    }, {
-                        text: 'Novo produto',
-                        active: true
                     }]
                 },
                 token: Laravel.token,
@@ -221,7 +219,7 @@
                 });
             },
             addPreco() {
-               var preco = {
+                var preco = {
                    'id': '',
                    'lista_id': '',
                    'indice_venda': '',
@@ -229,8 +227,8 @@
                    'tipo': '',
                    'indice_compra': '',
                    'codigo_material': ''
-               };
-               this.form.precos.push(preco);
+                };
+                this.form.precos.push(preco);
             },
             removeListaPreco(id,index) {
                 var self = this;
@@ -262,6 +260,12 @@
                     }
                 });
             }
+        },
+        updated () {
+            $('[lista-description]').selectpicker('refresh');
+            $('[lista-description]').selectpicker({
+                style: 'btn-select rounded-0 border-0'
+            })
         },
         mounted() {
             if(this.id) {

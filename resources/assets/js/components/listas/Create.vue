@@ -32,10 +32,10 @@
                 breadcrumb: {
                     items: [{
                         text: 'Dashboard',
-                        href: '/painel/dashboard'
+                        to: { name: 'painel.dashboard.index' },
                     }, {
                         text: 'Lista listas',
-                        href: '/painel/listas'
+                        to: { name: 'painel.listas.index' },
                     }, {
                         text: 'Nova lista',
                         active: true
