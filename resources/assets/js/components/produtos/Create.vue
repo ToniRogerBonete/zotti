@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="bg-white p-3">
-            <div class="row d-print-none">
-                <div class="col-md-12 border-bottom mb-4">
-                    <breadcrumb class="bg-transparent p-0" :items="breadcrumb.items"></breadcrumb>
-                </div>
+        <div class="card bg-white">
+            <div class="card-header ml-0 d-print-none">
+                <breadcrumb class="bg-transparent p-0 mb-0" :items="breadcrumb.items"></breadcrumb>
             </div>
-            <form-create-edit ref="formularioContato" action="/api/produto" :id="id" method="POST"></form-create-edit>
+            <div class="card-body">
+                <form-create-edit ref="formularioContato" action="/api/produto" :id="id" method="POST"></form-create-edit>
+            </div>
         </div>
     </div>
 </template>

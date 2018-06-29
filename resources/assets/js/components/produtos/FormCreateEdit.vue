@@ -233,6 +233,8 @@
             removeListaPreco(id,index) {
                 var self = this;
                 $.confirm({
+                    animation: 'none',
+                    closeAnimation: 'scale',
                     title: 'Confirme!',
                     content: 'Você deseja confirmar a exclusão do item?',
                     buttons: {
