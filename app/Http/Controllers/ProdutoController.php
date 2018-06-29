@@ -72,16 +72,41 @@ class ProdutoController extends Controller
             abort(403);
         }
 
-        $produto = Produto::with('lista_precos','lista_precos.lista');
-        $produto = $this->filtro($produto, $request)
-            ->paginate(13);
+        $produto = new Produto();
+
+        if($request->tipo!=1) {
+            $produto = $this->filtroPorTipo($produto, $request);
+        } else {
+            $produto = $this->filtroPorTipoTodos($produto, $request);
+        }
+
+        $produto = $produto->paginate(13);
         return response()->json($produto);
     }
 
-    public function filtro($query, $request){
-        if($request->filtro) {
+    public function filtroPorTipo($query, $request) {
+        $query = $query->whereHas('lista_precos', function($q) use ($request) {
+            if($request->tipo==4) {
+                $q->where('codigo_material', $request->filtro);
+            }
+        })
+        ->whereHas('lista_precos.lista');
+        if($request->tipo==2) {
+            $query = $query->where('codigo', '=', $request->filtro);
+        }
+        if($request->tipo==3) {
             $query = $query->where('nome', 'like', '%' . $request->filtro . '%');
         }
+        return $query;
+    }
+
+    public function filtroPorTipoTodos($query, $request) {
+        $query = $query->whereHas('lista_precos', function($q) use ($request) {
+            $q->where('codigo_material', $request->filtro);
+        })
+        ->with('lista_precos.lista');
+        $query = $query->orWhere('codigo', 'like', '%' . $request->filtro . '%');
+        $query = $query->orWhere('nome', 'like', '%' . $request->filtro . '%');
         return $query;
     }
 

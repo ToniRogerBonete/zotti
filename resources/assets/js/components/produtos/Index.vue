@@ -8,13 +8,27 @@
             </div>
             <form>
                 <div class="row d-print-none">
-                    <div class="form-group col-9 col-sm-7 col-lg-4">
-                        <div class="input-group">
-                            <input v-model="filtro" type="text" class="form-control" placeholder="procure por...">
-                            <div class="input-group-append">
-                                <button type="submit" @click.prevent="getItens" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Digiite algo que deseja encontrar">
-                                    <i class="fas fa-search"></i>
-                                </button>
+                    <div class="col-9 col-sm-7 col-lg-8">
+                        <div class="row d-print-none">
+                           <div class="col-9 col-sm-7 col-lg-4">
+                                <div class="input-group">
+                                    <select v-model="tipo" class="form-control">
+                                        <option value="1">Tudo</option>
+                                        <option value="2">Código Zotti</option>
+                                        <option value="3">Descrição</option>
+                                        <option value="4">Código material</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-9 col-sm-7 col-lg-6">
+                                <div class="input-group">
+                                    <input v-model="filtro" type="text" class="form-control" placeholder="procure por...">
+                                    <div class="input-group-append">
+                                        <button type="submit" @click.prevent="getItens" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Digiite algo que deseja encontrar">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -77,6 +91,7 @@
         data: function() {
             return {
                 filtro: '',
+                tipo: 1,
                 currentPage: null,
                 totalRows: null,
                 perPage: null,
@@ -99,7 +114,7 @@
                 self = this;
                 axios({
                     method: 'get',
-                    url: '/api/produto/filtro?page=' + this.currentPage + '&filtro=' + this.filtro
+                    url: '/api/produto/filtro?page=' + this.currentPage + '&filtro=' + this.filtro + '&tipo=' + this.tipo
                 })
                 .then(function (response) {
                     self.produtos = response.data.data;
