@@ -97,7 +97,7 @@
             if(this.id) {
                 this.getLista();
             }
-            Vue.nextTick(() => this.$refs.descricao.focus());
+            this.$refs.descricao.focus();
         },
     }
 </script>

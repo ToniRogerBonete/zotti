@@ -44,6 +44,7 @@
             }
         },
         mounted() {
+            this.verificaPermissao('usuario-create','/painel/balcao');
         },
     }
 </script>

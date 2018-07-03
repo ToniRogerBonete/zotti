@@ -125,7 +125,7 @@
                 this.getUsuario();
             }
             this.getRoles();
-            Vue.nextTick(() => this.$refs.name.focus());
+            this.$refs.name.focus();
         },
     }
 </script>

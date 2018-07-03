@@ -25,9 +25,11 @@
                 {{--<li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>--}}
                 {{--<li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>--}}
             @else
+                <li><a class="nav-link" href="/painel/balcao"><i class="fas fa-store fa-lg"></i> Balcão</a></li>
+                @if(Gate::check('produto-create') || Gate::check('lista-view'))
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        <i class="fas fa-box-open fa-lg"></i> Cadastros <span class="caret"></span>
+                        <i class="fas fa-edit fa-lg"></i> Cadastros <span class="caret"></span>
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,6 +45,7 @@
                         @endcan
                     </div>
                 </li>
+                @endif
                 @if(Gate::check('usuario-view') || Gate::check('papel-view'))
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

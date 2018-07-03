@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -15,6 +16,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('auth.login');
+        if (Auth::guard()->guest()) {
+            return view('auth.login');
+        } else {
+            return redirect('/painel/balcao');
+        }
     }
 }

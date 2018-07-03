@@ -114,7 +114,7 @@
                 this.getPapel();
             }
             this.getPermissoes();
-            Vue.nextTick(() => this.$refs.name.focus());
+            this.$refs.name.focus();
         },
     }
 </script>

@@ -20,12 +20,12 @@ class CreateListaPrecosTable extends Migration
             $table->integer('produto_id')->unsigned();
             $table->foreign('produto_id')->references('id')->on('produtos')->onDelete('cascade');
             $table->integer('lista_id')->unsigned();
-            $table->foreign('lista_id')->references('id')->on('listas')->onDelete('cascade');;
-            $table->decimal('indice_venda','6','2');
-            $table->char('tipo',3);
-            $table->decimal('indice_compra','6','2');
-            $table->char('codigo_material',20);
-            $table->decimal('preco','6','2');
+            $table->foreign('lista_id')->references('id')->on('listas')->onDelete('cascade');
+            $table->decimal('indice_venda','6','2')->nullable();
+            $table->char('tipo',3)->nullable();
+            $table->decimal('indice_compra','6','2')->nullable();
+            $table->char('codigo_material',20)->nullable();
+            $table->decimal('preco','6','2')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

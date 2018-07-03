@@ -68,7 +68,7 @@ Vue.mixin({
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
         },
-        verificaPermissao: function(permissao) {
+        verificaPermissao: function(permissao, url) {
             var Permissions = JSON.parse(window.localStorage['permissions']);
             var arr = [];
             var i;
@@ -77,10 +77,14 @@ Vue.mixin({
                     arr[i] = Permissions[i].name;
                 }
             }
-            if(arr.indexOf(permissao) > -1) {
-                return true;
-            } else {
-                return false;
+            if(!url) {
+                if (arr.indexOf(permissao) > -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if(arr.indexOf(permissao) == -1) {
+                this.$router.push({path: url});
             }
         },
         goBack: function (val) {
@@ -97,11 +101,20 @@ Vue.mixin({
             this.$store.commit('setMsgErrorSuccess', {status: status, msg: msg});
             $(".form-control").removeClass("is-invalid");
         },
+        replaceAll: function replaceAll(str, find, replace) {
+            return str.split(find).join(replace);
+        },
         classErrorSuccess: function(erro) {
             var self = this;
             $(".form-control").removeClass("is-invalid");
             Object.values(Object.getOwnPropertyNames(erro.response.data.errors)).forEach(function (value) {
                 $("#"+value).addClass("is-invalid");
+                $("#"+self.replaceAll(value,'.','')).parent('.bootstrap-select').addClass("is-invalid");
+            });
+        },
+        tooltip: function(el) {
+            $(function () {
+                $(el).tooltip()
             });
         },
         verificaStatusHttp: function(erro) {

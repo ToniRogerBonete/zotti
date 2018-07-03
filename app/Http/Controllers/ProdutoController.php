@@ -85,17 +85,23 @@ class ProdutoController extends Controller
     }
 
     public function filtroPorTipo($query, $request) {
-        $query = $query->whereHas('lista_precos', function($q) use ($request) {
-            if($request->tipo==4) {
-                $q->where('codigo_material', $request->filtro);
-            }
-        })
-        ->whereHas('lista_precos.lista');
         if($request->tipo==2) {
+            $query = $query->with('lista_precos','lista_precos.lista');
             $query = $query->where('codigo', '=', $request->filtro);
         }
         if($request->tipo==3) {
+            $query = $query->with('lista_precos','lista_precos.lista');
             $query = $query->where('nome', 'like', '%' . $request->filtro . '%');
+        }
+        if($request->tipo==4) {
+            $query = $query->whereHas('lista_precos', function ($q) use ($request) {
+                $q->where('codigo_material', $request->filtro);
+            })
+                ->with('lista_precos.lista');
+        }
+        if($request->tipo==5) {
+            $query = $query->with('lista_precos','lista_precos.lista');
+            $query = $query->where('codigo_original', '=', $request->filtro);
         }
         return $query;
     }
@@ -107,6 +113,7 @@ class ProdutoController extends Controller
         ->with('lista_precos.lista');
         $query = $query->orWhere('codigo', 'like', '%' . $request->filtro . '%');
         $query = $query->orWhere('nome', 'like', '%' . $request->filtro . '%');
+        $query = $query->orWhere('codigo_original', 'like', '%' . $request->filtro . '%');
         return $query;
     }
 
@@ -160,8 +167,6 @@ class ProdutoController extends Controller
     }
 
     public function listas($request, $produto) {
-
-        if($request->precos[0]['lista_id']) {
             foreach ($request->precos as $key => $value) {
                 ListaPreco::updateOrCreate(
                     [
@@ -179,7 +184,6 @@ class ProdutoController extends Controller
                     ]
                 )->save();
             }
-        }
     }
 
     /**

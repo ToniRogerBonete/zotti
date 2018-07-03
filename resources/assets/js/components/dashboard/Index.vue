@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="bg-white p-3 mb-5">
-            <div class="row d-print-none">
-                <div class="col-md-12 border-bottom mb-4">
-                    <breadcrumb class="bg-transparent p-0" :items="breadcrumb.items"></breadcrumb>
-                </div>
+        <div class="card bg-white">
+            <div class="card-header ml-0 d-print-none">
+                <breadcrumb class="bg-transparent p-0 mb-0" :items="breadcrumb.items"></breadcrumb>
+            </div>
+            <div class="card-body">
             </div>
         </div>
     </div>

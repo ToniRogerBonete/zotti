@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/painel/produtos';
+    protected $redirectTo = '/painel/balcao';
 
     /**
      * Create a new controller instance.

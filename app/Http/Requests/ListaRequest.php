@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ListaRequest extends FormRequest
 {
@@ -20,9 +21,7 @@ class ListaRequest extends FormRequest
     {
         return [
             'descricao.required' => 'Digite a descrição',
-            'contato.required' => 'Digite um contato',
-            'telefone.required' => 'Digite o telefone',
-            'observacao.required' => 'Digite a observcação',
+            'descricao.unique' => 'Já existe uma lista com essa descrição'
         ];
     }
 
@@ -34,10 +33,10 @@ class ListaRequest extends FormRequest
     public function rules()
     {
         return [
-            'descricao' => 'required',
-            'contato' => 'required',
-            'telefone' => 'required',
-            'observacao' => 'required'
+            'descricao' => [
+                'required',
+                Rule::unique('listas')->ignore($this->request->get('id'))
+            ]
         ];
     }
 }

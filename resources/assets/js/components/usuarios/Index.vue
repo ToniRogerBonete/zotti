@@ -9,7 +9,7 @@
                     <div class="row d-print-none">
                         <div class="form-group col-9 col-sm-7 col-lg-4">
                             <div class="input-group">
-                                <input v-model="filtro" type="text" class="form-control" placeholder="procure por...">
+                                <input v-model="filtro" ref="filtro" type="text" class="form-control" placeholder="procure por...">
                                 <div class="input-group-append">
                                     <button type="submit" @click.prevent="getItem" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Digiite algo que deseja encontrar">
                                         <i class="fas fa-search"></i>
@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group col text-right">
+                        <div class="form-group col text-right mb-0">
                             <router-link v-if="this.verificaPermissao('usuario-create')" :to="{ name: 'painel.usuarios.create' }" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Adicionar novo usuário">
                                 <i class="fas fa-plus"></i> <span class="d-none d-md-inline-block">Novo usuário</span>
                             </router-link>
@@ -44,7 +44,7 @@
                             <span v-if="filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Não foram encontrado produtos com <strong>{{filtro}}</strong></span>
                             <span v-if="!filtro"><i class="fas fa-info-circle fa-lg text-warning" aria-hidden="true"></i> Ainda não existem cadastros de produtos</span>
                         </div>
-                        <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none"></b-pagination>
+                        <b-pagination v-if="lastPage>1" align="right" :total-rows="totalRows" v-model="currentPage" :per-page="perPage" class="d-print-none pt-3"></b-pagination>
                     </div>
                 </div>
             </div>
@@ -117,6 +117,8 @@
         },
         mounted() {
             this.getItem();
+            this.$refs.filtro.focus();
+            this.verificaPermissao('usuario-view','/painel/balcao');
         }
     }
 </script>

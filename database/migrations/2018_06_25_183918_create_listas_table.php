@@ -18,9 +18,9 @@ class CreateListasTable extends Migration
             $table->integer('account_id')->unsigned();
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('descricao',30);
-            $table->string('contato',50);
-            $table->string('telefone',50);
-            $table->string('observacao',255);
+            $table->string('contato',50)->nullable();
+            $table->string('telefone',50)->nullable();
+            $table->string('observacao',255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

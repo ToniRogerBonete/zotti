@@ -22,6 +22,9 @@ import Lista from '../components/listas/Index.vue';
 import ListaEdit from '../components/listas/Edit.vue';
 import ListaCreate from '../components/listas/Create.vue';
 
+//BALCÃO
+import Balcao from '../components/balcao/Index.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -107,6 +110,12 @@ export default new Router({
            name: 'painel.listas.create',
            component: ListaCreate,
            props: true,
+       },
+
+       {//balcão
+           path: '/painel/balcao',
+           name: 'painel.balcao.index',
+           component: Balcao,
        }
    ],
    mode: 'history',

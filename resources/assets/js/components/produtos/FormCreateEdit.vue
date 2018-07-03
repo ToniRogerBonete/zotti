@@ -70,11 +70,11 @@
                 <div class="form-group col-md-12">
                     <div class="card">
                         <h6 class="card-header text-muted position-relative">
-                            Lista de preços <button @click.prevent="addPreco" type="button" class="btn btn-success btn-sm float-right" style="position: absolute; top: 7px; right: 7px;"><i class="fas fa-plus"></i> Novo item</button>
+                            Lista de preços <button @click.prevent="addPreco" type="button" class="btn btn-success btn-sm float-right" style="position: absolute; top: 7px; right: 7px;" data-toggle="tooltip" data-placement="top" title="Adicionar novo item"><i class="fas fa-plus"></i> Novo item</button>
                         </h6>
                         <div class="card-body p-0">
                             <table class="table table-bordered table-hover mb-0 small">
-                                <thead>
+                                <thead v-if="form.precos.length>0">
                                     <tr>
                                         <th scope="col" class="text-left" style="width:20%">Lista</th>
                                         <th scope="col" class="text-center" style="width:9%">Indice de venda</th>
@@ -88,7 +88,7 @@
                                 <tbody>
                                     <tr v-for="(item,index) in form.precos">
                                         <td class="p-0">
-                                            <select v-model="item.lista_id" lista-description class="form-control rounded-0 border-0" data-live-search="true">
+                                            <select :id="'precos'+index+'lista_id'" v-model="item.lista_id" lista-description class="form-control rounded-0 border-0" data-live-search="true">
                                                 <option value="">selecione uma lista</option>
                                                 <option v-for="(itenl,index) in listas" :selected="item.lista_id == itenl.id ? true : false" :value="itenl.id">{{itenl.descricao}}</option>
                                             </select>
@@ -99,8 +99,8 @@
                                         <td class="p-0"><money v-model="item.indice_compra" class="form-control rounded-0 border-0 text-center"></money></td>
                                         <td class="p-0"><input v-model="item.codigo_material" type="text" maxlength="20" class="form-control rounded-0 border-0 text-center"></td>
                                         <td class="p-0 text-center position-relative">
-                                            <button @click.prevent="removeListaPreco(item.id,index)" type="button" class="btn bg-transparent btn-sm" style="margin-top: 7px;">
-                                                <i class="fas fa-times-circle fa-lg text-danger"></i>
+                                            <button @click.prevent="removeListaPreco(item.id,index)" type="button" class="btn btn-danger btn-sm" style="margin-top: 4px;" data-toggle="tooltip" data-placement="top" title="Excluir item">
+                                                <i class="fas fa-times"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -145,15 +145,7 @@
                     origem: '',
                     cest: '',
                     observacao: '',
-                    precos: [{
-                        'id': '',
-                        'lista_id': '',
-                        'indice_venda': '',
-                        'preco': '',
-                        'tipo': '',
-                        'indice_compra': '',
-                        'codigo_material': ''
-                    }]
+                    precos: []
                 },
                 token: Laravel.token,
                 listas: []
@@ -174,9 +166,7 @@
                     </div>';
                     self.msgErrorSuccess(true, self.msgError);
                     self.getProduto();
-                    if(!self.id) {
-                        self.$router.push('/painel/produtos');
-                    }
+                    self.$router.push('/painel/produtos');
                 })
                 .catch(function (error) {
                     self.classErrorSuccess(error);
@@ -202,6 +192,7 @@
                     self.form.cest = response.data.cest;
                     self.form.observacao = response.data.observacao;
                     self.form.precos = response.data.lista_precos;
+                    self.tooltip('[data-toggle="tooltip"]');
                 })
                 .catch(function (error) {
                 });
@@ -238,7 +229,7 @@
                     title: 'Confirme!',
                     content: 'Você deseja confirmar a exclusão do item?',
                     buttons: {
-                        confirmar: {
+                        Confirmar: {
                             btnClass: 'btn-blue',
                             action: function () {
                                 self.form.precos.splice(index,1);
@@ -257,7 +248,7 @@
                                 });
                             }
                         },
-                        cancelar: function () {
+                        Cancelar: function () {
                         },
                     }
                 });
@@ -267,14 +258,16 @@
             $('[lista-description]').selectpicker('refresh');
             $('[lista-description]').selectpicker({
                 style: 'btn-select rounded-0 border-0'
-            })
+            });
+            this.tooltip('[data-toggle="tooltip"]');
         },
         mounted() {
             if(this.id) {
                 this.getProduto();
             }
             this.getListas();
-            Vue.nextTick(() => this.$refs.codigo.focus());
+            this.$refs.codigo.focus();
+            this.tooltip('[data-toggle="tooltip"]');
         },
     }
 </script>
